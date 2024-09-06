@@ -151,4 +151,46 @@ return upper_bound(arr.begin(),arr.end(),m)-arr.begin();
 
 }
 ```
+># floor and cail
+
+> #  First and Last Position of an Element In Sorted Array
+![](./img/First%20and%20Last%20Position%20of%20an%20Element%20In%20Sorted%20Array-1.png)
+![](./img/First%20and%20Last%20Position%20of%20an%20Element%20In%20Sorted%20Array-2.png)
+
+using upper bound and lower bound , if lb not exist than return {-1,-1}
+```cpp
+pair<int, int> firstAndLastPosition(vector<int>& arr, int n, int k)
+{
+ int s =0,e = n-1 , fist =n ,second = n,m;
+
+ // lower bound
+ while(s<=e){
+     m = s + (e-s)/2;
+     if(arr[m]>=k){
+         fist = m;
+         e = m-1;
+     }
+     else s = m+1;
+ }
+
+// upper bound
+s =0;
+e = n-1;
+while(s<=e){
+    m = s +(e-s)/2;
+    if(arr[m]>k){
+        second = m;
+        e = m-1;
+    }
+    else {
+        s = m+1;
+    }
+}
+// if not presesent
+if(fist==n||arr[fist]!=k)return{-1,-1};
+
+return {fist ,second-1};
+
+}
+```
 
