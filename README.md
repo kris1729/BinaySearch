@@ -193,4 +193,73 @@ return {fist ,second-1};
 
 }
 ```
+> # Number of occurrence
+![](./img/Number%20of%20occurrence.png)
+approch --> up - lb
+```cpp
+int count(vector<int>& arr, int n, int x) {
+	// find lower bound
+  int s =0,e = n-1,lb=n,ub=n,m;
+  while(s<=e){
+    m = s + (e-s)/2;
+    if(arr[m]>=x){
+      lb = m;
+      e = m-1;
+    }
+    else s = m+1;
+  }
+
+  if(lb==n)return 0; // optional line
+
+  // find uppor bound
+  s =0,e = n-1;
+  while(s<=e){
+    m = s + (e-s)/2;
+    if(arr[m]>x){
+      ub = m;
+      e = m-1;
+    }
+    else s = m+1;
+  }
+  return (ub - lb );
+
+}
+```
+
+> #  Search In Rotated Sorted Array # IMPORTANT
+![](./img/Search%20In%20Rotated%20Sorted%20Array-1.png)
+![](./img/Search%20In%20Rotated%20Sorted%20Array-2.png)
+
+Approch--> first take mid of array ,
+now array divide is two part , and if all is unique element than it fixed than one part is sorted
+and other part is unsorted than 
+if first one is sorted and seach in between if element not present and search in other unsorted part
+
+```cpp
+int search(vector<int>& arr, int n, int k)
+{
+    int s =0,e = n-1,m;
+    while(s<=e){
+        m = s + (e-s)/2;
+        if(arr[m]==k)return m;
+        // fist part sorted
+        if(arr[s]<=arr[m]){
+            if(arr[s]<=k&&k<=arr[m])
+            e = m-1;
+            else
+            s = m+1;
+             
+        }
+        // second part is sorted
+        else{
+            if(arr[m]<=k&&k<=arr[e])
+            s = m+1;
+            else 
+            e = m-1;
+        }
+    }
+    return -1;
+}
+```
+
 
