@@ -261,5 +261,101 @@ int search(vector<int>& arr, int n, int k)
     return -1;
 }
 ```
+>#  Search In A Rotated Sorted Array II
+![](./img/Search%20In%20A%20Rotated%20Sorted%20Array%20II.png)
+> Approch --> this is same question like above 
+some chance is that in between array may be present one digit more than one time 
 
+- for solving this , we have to add a extra case trim condition
 
+```cpp
+bool searchInARotatedSortedArrayII(vector<int>&arr, int k) {
+    int s =0,e=arr.size()-1,m;
+    while(s<=e){
+        m = s+(e-s)/2;
+        if(arr[m]==k)return true;
+        // trim case IMPORTANT
+        if(arr[s]==arr[e]&&arr[s]!=k){
+            s++;
+            e--;
+        }
+        // first part sorted
+        if(arr[s]<=arr[m]){
+            if(arr[s]<=k&&k<=arr[m])
+            e =m-1;
+            else
+            s = m+1;
+        }
+        // second part sorted
+        else{
+            if(arr[m]<=k&&k<=arr[e])
+            s =m+1;
+            else
+            e = m-1;
+        }
+    }
+    return false;
+}
+```
+> #  Find Minimum in Rotated Sorted Array
+![](./img/Find%20Minimum%20in%20Rotated%20Sorted%20Array.png)
+
+>approch--> same as above we divide a arry in two part one is sorted and other is 
+unsorted , than we take first as mini in between the sorted part and then my new searhing space will 
+be unsorted part
+
+```cpp
+int findMin(vector<int>& arr)
+{
+    int s =0,e =arr.size()-1,m,mini=INT_MAX;
+    while(s<=e){
+        m = s + (e-s)/2;
+        // first part sorted
+        if(arr[s]<=arr[m]){
+            mini = min(mini ,arr[s]);
+            s = m+1;
+        }
+        // second part sorted
+         else{
+             mini = min(mini ,arr[m]);
+             e = m-1;
+         }
+    }
+    return mini;
+	
+}
+```
+># Rotation IMPORTANT
+![](./img/Rotation-1.png)
+![](./img/Rotation-2.png)
+
+> Approch --> int this question for find the no of rotaion we have to find the index of the mini 
+element  in the array , it will be the no of roation
+
+```cpp
+int findKRotation(vector<int> &arr){
+    //index of min
+     int s =0,e=arr.size()-1,m,ind , mini = 1e8;
+     while(s<=e){
+         m = s+(e-s)/2;
+         // first is sorted
+         if(arr[s]<=arr[m]){
+           if (mini > arr[s]) {
+             ind = s;
+             mini = arr[s];
+           }
+                 s = m+1;
+         }
+         // second part sorted
+         else {
+                 if (mini > arr[m]) {
+             ind = m;
+             mini = arr[m];
+                 }
+                 e =m-1;
+             
+         }
+     }
+     return ind;    
+}
+```
