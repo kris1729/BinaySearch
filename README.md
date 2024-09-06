@@ -100,9 +100,11 @@ int lowerBound(vector<int> arr, int n, int x) {
 
 > # UPPER BOUND
 if smallest index such that arr[ind]>x
+
+
+
 ![](./img/UB_1.png)
 ![](./img/UB_2.png) 
-> solve
 ![](./img/UBBB_0.png)
 
 ```cpp
