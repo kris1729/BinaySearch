@@ -153,6 +153,45 @@ return upper_bound(arr.begin(),arr.end(),m)-arr.begin();
 }
 ```
 ># floor and cail
+![](./img/Ceil%20The%20Floor.png)
+![](./img/Ceil%20The%20Floor-1.png)
+
+```cpp
+pair<int, int> getFloorAndCeil(vector<int> &a, int n, int x) {
+	// floor  largest element arr[i]<=x
+    // ciel   smallest element arr[i]>=x // lower bound
+    
+    // floor  
+    int fl =-1 , ci = -1;
+    
+    int s =0,e = n-1,m;
+    while(s<=e){
+        m = (s+e)/2;
+        if (a[m] <= x) {
+          s = m + 1;
+          fl = a[m];
+        } else
+          e = m - 1;
+    }
+   
+    // ceil (lower bound)
+    s =0,e =n-1;
+    while(s<=e){
+        m = (s+e)/2;
+        if (a[m] >= x) {
+          e = m - 1;
+          ci = a[m];
+        } else
+          s = m + 1;
+    }
+
+
+return {fl,ci};
+
+
+}
+```
+
 
 > #  First and Last Position of an Element In Sorted Array
 ![](./img/First%20and%20Last%20Position%20of%20an%20Element%20In%20Sorted%20Array-1.png)
@@ -360,3 +399,111 @@ int findKRotation(vector<int> &arr){
      return ind;    
 }
 ```
+> #  Single Element in a Sorted Array
+![](./img/Single%20Element%20in%20a%20Sorted%20Array.png)
+
+APProch--> see the position of middle 
+```cpp
+int singleNonDuplicate(vector<int>& arr)
+{
+    int n = arr.size();
+	// base case and edge case
+	if(n==1)return arr[0];
+	if(arr[0]!=arr[1])return arr[0];
+	if(arr[n-2]!=arr[n-1])return arr[n-1];
+
+	int s =1,e =n-2,m;
+	while(s<=e){
+		m = (s+e)/2;
+
+		if(arr[m]!=arr[m-1]&&arr[m]!=arr[m+1])return arr[m];
+		// mid is at odd position
+		if(m&1){
+           if(arr[m]==arr[m-1])s =m+1;
+			else e = m-1;
+		}
+		// mid is ad even position
+		else{
+            if(arr[m]==arr[m+1])s =m+1;
+		   else e = m-1;
+		}
+	}
+}
+```
+> #  Square Root of a number
+![](./img/Square%20Root%20of%20a%20number.png)
+
+Approch --> ans can be [1,n]
+apply binary search b/w [1,n]
+```cpp
+int floorSqrt(int n)
+{
+   int s =0,e=n;
+   long long m;
+   while(s<=e){
+       m = (s+e)/2;
+       if(m*1LL*m>n)e =m-1;
+       else s = m+1;
+   }
+   return e;
+}
+```
+> #  Find Nth Root Of M # IMPORTANT
+![](./img/Find%20Nth%20Root%20Of%20M.png)
+
+Approch --> like root of a number 
+but in this case the multipy function is important consept because 
+in b/w exponent of mid^n not possible using binary exopent
+so use unique approch
+
+```cpp
+int fun(int mid ,int n,int m){
+    long long a = 1;
+    for(int i =0;i<n;i++){
+        a *=mid;
+        if(a>m)return 2;
+    }
+    if(a<m)return -1;
+     return 1;
+}
+
+int NthRoot(int n, int m) {
+        int s =1,e=m,mid;
+        while(s<=e){
+            mid = (s+e)/2;
+            int val = fun(mid,n,m);
+            if(val==1)return mid;
+            else if (val==-1) s =mid+1;
+            else e = mid-1;
+        }
+        return -1;
+
+}
+```
+> # Koko Eating Bananas
+Approch--> ans range will be [1,INT_MAX] 
+we take mid ad each time try to minimize the ans 
+if it fit koko are possible to eat bananas
+
+```cpp
+int minEatingSpeed(vector<int>& arr, int h) {
+        int s = 1, e = INT_MAX, m;
+        while (s <= e) {
+            m = s + (e - s) / 2;
+            // .......................
+            // if koko eat m bana in one hour 
+            // than total hour ot eat all bananas
+            long long Hour = 0;
+            for (auto x : arr)
+                Hour += (x + m - 1) / m;
+            // ..................
+
+            if (Hour <= h)
+                e = m - 1;
+            else
+                s = m + 1;
+        }
+        return s;
+    }
+```
+
